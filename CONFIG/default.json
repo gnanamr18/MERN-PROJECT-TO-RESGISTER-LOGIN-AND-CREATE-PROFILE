@@ -1,0 +1,3 @@
+{"mongoURI": "mongodb+srv://Gnanam:gna123@atlascluster.zinvb1u.mongodb.net/?retryWrites=true&w=majority",
+ "jwtSecret": "mysecrettoken"
+}
