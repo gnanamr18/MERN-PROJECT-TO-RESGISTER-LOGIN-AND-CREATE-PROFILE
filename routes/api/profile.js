@@ -54,8 +54,7 @@ router.post(
       instagram,
       linkedin,
       facebook,
-      // spread the rest of the fields we don't need to check
-      ...rest
+      
     } = req.body;
 
 
@@ -96,10 +95,45 @@ router.post(
       res.status(500).json('server serror')
 
     }
+  },
 
+  // get all profiles
+  router.get('/', async (req,res)=>{
+    try {
+      const profiles = await Profile.findOne().populate('user',['name', 'avatar'])
+      res.json(profiles)
+    } catch (error) {
+      console.error(error.message)
+      res.status(500).send('server error')
+    }
+  }),
 
-    
-  }
+  // get profile by user id
+  router.get('/user/:user_id', async(req,res) =>{
+    try {
+      const profile = await Profile.findOne({user: req.params.user_id}).populate('user',['name', 'avatar']);
+      console.log(req.params.user_id)
+      if(!profile){return res.status(400).send('invalid user id')}
+      res.json(profile)
+    } catch (error) {
+      console.error(error.message)
+      res.status(500).send('server error')
+    }
+  }),
+
+  router.delete('/', async (req,res)=>{
+    try {
+      console.log(req.user.id)
+      await Profile.findOneAndRemove({user: req.user.id});
+      await User.findOneAndRemove({ _id : req.user.id});
+      res.status(500).send('user deleted')
+
+    }
+     catch (error) {
+      console.error(error.message);
+      res.status(500).send('server error')
+    }
+  })
 );
 
 module.exports = router;
