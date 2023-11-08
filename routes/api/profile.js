@@ -121,12 +121,12 @@ router.post(
     }
   }),
 
-  router.delete('/', async (req,res)=>{
+  router.delete('/', auth,  async (req,res)=>{ console.log(req.body)
     try {
-      console.log(req.user.id)
-      await Profile.findOneAndRemove({user: req.user.id});
-      await User.findOneAndRemove({ _id : req.user.id});
-      res.status(500).send('user deleted')
+      await Profile.findOneAndDelete({user: req.user.id});
+      
+      await User.findOneAndDelete({ _id : req.user.id});
+      res.status(200).send('user deleted')
 
     }
      catch (error) {
