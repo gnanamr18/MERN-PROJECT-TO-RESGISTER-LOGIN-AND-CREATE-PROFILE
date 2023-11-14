@@ -5,15 +5,10 @@ import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import "./App.css";
-// Redux
-import{Provider} from 'react-redux'
-import Store from "./Store";
 
 const App = () => {
   return (
-    
-      <Provider Store ={Store}>
-        <Router>
+          <Router>
           <Fragment>
             <Navbar />
             <Routes>
@@ -23,7 +18,7 @@ const App = () => {
             </Routes>
           </Fragment>
         </Router>
-      </Provider>
+     
   );
 };
 
