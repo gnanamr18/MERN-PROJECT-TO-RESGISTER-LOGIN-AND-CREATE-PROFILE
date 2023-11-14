@@ -8,7 +8,7 @@ const initialState = {}
 const middleware = [thunk]
 
 const store = configureStore({
-  reducer:{
+  reducer:{rootReducer
     
   },
   initialState,
