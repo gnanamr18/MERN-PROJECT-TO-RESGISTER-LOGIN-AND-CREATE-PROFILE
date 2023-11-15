@@ -11,7 +11,7 @@ const Register = (Props) => {
   const [formData, setformData] = useState({
     name: "",
     email: "",
-    password: "",
+    password: "",   
     password2: "",
   });
 
