@@ -5,12 +5,14 @@ import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import "./App.css";
+import Alert from "./components/layout/Alert";
 
 const App = () => {
   return (
           <Router>
           <Fragment>
             <Navbar />
+            <Alert />
             <Routes>
               <Route path="/" element={<Landing />} />
               <Route path="/register"  element={<div className="container"> <Register /> </div>} />   
