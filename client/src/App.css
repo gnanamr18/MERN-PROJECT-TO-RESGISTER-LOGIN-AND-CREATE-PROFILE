@@ -186,6 +186,7 @@ img {
 .alert-danger {
   background: var(--danger-color);
   color: #fff;
+  margin-top: 5rem;
 }
 
 .btn-success,

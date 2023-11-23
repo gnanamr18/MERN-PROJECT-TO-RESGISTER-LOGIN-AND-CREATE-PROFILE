@@ -1,25 +1,76 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { removealert } from "../../features/todo/reducerslice"; 
+const Alert = () => {
+  const alerts = useSelector((state) => state.alerts);
+  const dispatch = useDispatch();
 
-const Alert = ({ alerts }) => (
-  <div>
-    {alerts != null &&
-      alerts.length > 0 &&
-      alerts.map(alert => (
-        <div key={alert.id} className={`alert alert-${alert.alertType}`}>
-          {alert.msg}
+  useEffect(() => {
+    if (alerts !== null && alerts.length > 0) {
+     
+      alerts.forEach((alert) => {
+        const timeoutId = setTimeout(() => {
+          
+          dispatch(removealert(alert.id));
+        }, 2000);
+        console.log(timeoutId)
+
+        // Optionally, you can clear the timeout when the component unmounts or when the alert is manually removed
+        return () => clearTimeout(timeoutId);
+      });
+    }
+  }, [alerts]);
+
+  if (alerts !== null && alerts.length > 0) {
+    return (
+      alerts.map((alert) => (
+        <div key={alert.id} className={`alert-danger`}>
+          {alert.text}
         </div>
-      ))}
-  </div>
-);
+      ))
+    );
+  }
 
-Alert.propTypes = {
-  alerts: PropTypes.array.isRequired,
+  return null;
 };
 
-const mapStateToProps = state => ({
-  alerts: state.alert,
-});
+export default Alert;
 
-export default connect(mapStateToProps)(Alert);
+
+
+
+
+
+
+
+
+
+
+
+// import React, { useEffect } from "react";
+// import { useSelector } from "react-redux";
+// import { useDispatch } from "react-redux";
+// import { removealert } from "../../features/todo/reducerslice";
+
+// const Alert = () => { 
+//   const alerts = useSelector(state => state.alerts);
+//   const dispatch = useDispatch()
+
+//   useEffect = ( () => { alerts.foreach((alert)=> alert.id)})
+  
+//   if (alerts !==null && alerts.length > 0) {
+//     return (
+//       alerts.map((alert) => (
+//         <div key={alert.id} className={`alert-danger`}>
+//           {alert.text} 
+//         </div>
+//       ))
+//     );
+//   }
+  
+//   return null;
+// };
+
+// export default Alert;
+
+ 

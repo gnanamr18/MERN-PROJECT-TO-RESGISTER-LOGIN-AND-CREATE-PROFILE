@@ -1,30 +1,33 @@
 // import axios from "axios";
 // import { json } from "express";
 import React, { Fragment, useState } from "react";
-import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import { SetAlert } from "../../actions/alert";
-import PropTypes from 'prop-types';
-import {Alert} from '../../components/layout/Alert';
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { alert } from "../../features/todo/reducerslice";
 
-const Register = (Props) => {
+const Register = () => {
   const [formData, setformData] = useState({
     name: "",
     email: "",
     password: "",   
     password2: "",
   });
+  const dispatch = useDispatch()
+ 
 
   const { name, email, password, password2 } = formData;
   const onchange = (e) => {
     setformData({ ...formData, [e.target.name]: e.target.value });
   };
-  console.log(name);
+  
 
   const onsubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
-      Props.SetAlert("password do not match", 'danger');
+      dispatch(alert('password do not match'))
+     
+      
     } else {console.log('success')}
     //   const newUser = {
     //     name,
@@ -113,8 +116,6 @@ const Register = (Props) => {
   );
 };
 
-Register.propTypes = {
-  SetAlert: PropTypes.func.isRequired
-}
 
-export default connect(null, {SetAlert}) (Register);
+
+export default  Register;
