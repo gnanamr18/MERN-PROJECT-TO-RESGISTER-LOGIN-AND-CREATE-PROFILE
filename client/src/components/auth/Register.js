@@ -1,54 +1,32 @@
-// import axios from "axios";
-// import { json } from "express";
 import React, { Fragment, useState } from "react";
-import {Link} from 'react-router-dom';
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { alert } from "../../features/todo/reducerslice";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { alert } from "../../reducers/alertSlice";
+import { registerUser } from "../../actions/authActions";
+import { updateName } from "../../reducers/authSlice";
 
-const Register = () => {
+const Register = (data) => {
   const [formData, setformData] = useState({
     name: "",
     email: "",
-    password: "",   
+    password: "",
     password2: "",
   });
-  const dispatch = useDispatch()
- 
+  const dispatch = useDispatch();
 
   const { name, email, password, password2 } = formData;
-  const onchange = (e) => {
+  const onchange = (e, t = null) => {
+    if (t) dispatch(updateName({ name: e.target.value }));
     setformData({ ...formData, [e.target.name]: e.target.value });
   };
-  
 
   const onsubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
-      dispatch(alert('password do not match'))
-     
-      
-    } else {console.log('success')}
-    //   const newUser = {
-    //     name,
-    //     email,
-    //     password,
-    //   };
-    //   // console.log(formData)
-
-    //   try {
-    //     const config = {
-    //       headers: {
-    //         "Content-type": "application/json",
-    //       },
-    //     };
-    //     const body = JSON.stringify(newUser);
-    //     const res = await axios.post("http://localhost:5000/api/users", body, config);
-    //     console.log(res.data);
-    //   } catch (error) {
-    //     console.error(error.message);
-    //   }
-    // }
+      dispatch(alert("password do not match"));
+    } else {
+      dispatch(registerUser({ name, email, password }));
+    }
   };
 
   return (
@@ -70,7 +48,7 @@ const Register = () => {
             placeholder="Name"
             name="name"
             value={name}
-            onChange={(e) => onchange(e)}
+            onChange={(e) => onchange(e, "name")}
             required
           />
         </div>
@@ -116,6 +94,4 @@ const Register = () => {
   );
 };
 
-
-
-export default  Register;
+export default Register;

@@ -9,18 +9,33 @@ import Alert from "./components/layout/Alert";
 
 const App = () => {
   return (
-          <Router>
-          <Fragment>
-            <Navbar />
-            <Alert />
-            <Routes>
-              <Route path="/" element={<Landing />} />
-              <Route path="/register"  element={<div className="container"> <Register /> </div>} />   
-              <Route path="/login" element={<div className="container"> <Login /> </div>} />
-            </Routes>
-          </Fragment>
-        </Router>
-     
+    <Router>
+      <Fragment>
+        <Navbar />
+        <Alert />
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route
+            path="/register"
+            element={
+              <div className="container">
+                {" "}
+                <Register />{" "}
+              </div>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <div className="container">
+                {" "}
+                <Login />{" "}
+              </div>
+            }
+          />
+        </Routes>
+      </Fragment>
+    </Router>
   );
 };
 
