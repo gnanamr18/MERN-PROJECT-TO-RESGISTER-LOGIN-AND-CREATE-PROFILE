@@ -6,6 +6,7 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import "./App.css";
 import Alert from "./components/layout/Alert";
+import Dashboard from "./components/dashboard/Dashboard";
 
 const App = () => {
   return (
@@ -30,6 +31,15 @@ const App = () => {
               <div className="container">
                 {" "}
                 <Login />{" "}
+              </div>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <div className="container">
+                {" "}
+                <Dashboard />
               </div>
             }
           />

@@ -1,28 +1,54 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { registerUser } from "../actions/authActions";
-import { removealert } from "./alertSlice";
-import { useDispatch } from "react-redux";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { registerUser, userLogin } from "../actions/authService";
+import { useSelector, useDispatch } from "react-redux";
+import { addAlert } from "./alertSlice";
+
+// Get user from localStorage
+const userToken = localStorage.getItem("userToken")
+  ? localStorage.getItem("userToken")
+  : null;
 
 const initialState = {
   loading: false,
-  userInfo: {}, // for user object
-  userToken: null, // for storing the JWT
+  userInfo: null,
+  userToken,
   error: null,
-  success: false, // for monitoring the registration process.
-  name: "",
-  msg: "",
+  success: false,
+  errorMsg: false,
 };
 
-const authSlice = createSlice({
+export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    updateName: (state, { payload }) => {
-      state.name = payload.name;
+    logout: (state) => {
+      localStorage.removeItem("userToken"); // delete token from storage
+      state.loading = false;
+      state.userInfo = null;
+      state.userToken = null;
+      state.error = null;
+    },
+    setCredentials: (state, { payload }) => {
+      state.userInfo = payload;
     },
   },
   extraReducers: {
-    // register user
+    // login user
+    [userLogin.pending]: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [userLogin.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.userInfo = payload;
+      state.userToken = payload.userToken;
+    },
+    [userLogin.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.error = payload;
+      console.log(payload);
+    },
+
     [registerUser.pending]: (state) => {
       state.loading = true;
       state.error = null;
@@ -30,16 +56,16 @@ const authSlice = createSlice({
     [registerUser.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.success = true; // registration successful
-      state.userInfo = payload.data;
+      // state.userToken = localStorage.setItem("userToken");
     },
     [registerUser.rejected]: (state, { payload }) => {
       state.loading = false;
       state.error = payload;
-      console.log(payload[0].msg);
-      // useDispatch(removealert(payload[0].msg));
+      // console.log(payload.response.data.errors);
+      state.errorMsg = true;
     },
   },
 });
 
-export const { regsuccess, regfail, updateName } = authSlice.actions;
+export const { logout, setCredentials } = authSlice.actions;
 export default authSlice.reducer;

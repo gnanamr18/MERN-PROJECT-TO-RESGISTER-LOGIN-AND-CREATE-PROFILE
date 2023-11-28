@@ -1,9 +1,9 @@
 import React, { Fragment, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { alert } from "../../reducers/alertSlice";
-import { registerUser } from "../../actions/authActions";
-import { updateName } from "../../reducers/authSlice";
+import { addAlert } from "../../reducers/alertSlice";
+import { registerUser } from "../../actions/authService";
 
 const Register = (data) => {
   const [formData, setformData] = useState({
@@ -12,20 +12,30 @@ const Register = (data) => {
     password: "",
     password2: "",
   });
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { loading, userInfo, error, success } = useSelector(
+    (state) => state.auth
+  );
+
+  if (success) {
+    navigate("/login");
+  }
 
   const { name, email, password, password2 } = formData;
   const onchange = (e, t = null) => {
-    if (t) dispatch(updateName({ name: e.target.value }));
+    // if (t) dispatch(updateName({ name: e.target.value }));
     setformData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const onsubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
-      dispatch(alert("password do not match"));
+      dispatch(addAlert("password do not match"));
     } else {
       dispatch(registerUser({ name, email, password }));
+      // console.log(userData);
     }
   };
 

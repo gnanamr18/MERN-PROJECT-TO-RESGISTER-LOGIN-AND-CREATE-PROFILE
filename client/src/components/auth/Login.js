@@ -1,24 +1,32 @@
-import React, { Fragment, useState } from "react";
-import {Link} from 'react-router-dom'
+import React, { Fragment, useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { userLogin } from "../../actions/authService";
 
 const Login = () => {
   const [formData, setformData] = useState({
-    
     email: "",
     password: "",
-   
   });
 
-  const {  email, password } = formData;
+  const { loading, userInfo, error } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/dashboard");
+    }
+  }, [userInfo]);
+
+  const { email, password } = formData;
   const onchange = (e) => {
     setformData({ ...formData, [e.target.name]: e.target.value });
   };
-  
 
   const onsubmit = async (e) => {
     e.preventDefault();
-    console.log('success')
-    
+    dispatch(userLogin({ email, password }));
   };
 
   return (
@@ -34,7 +42,6 @@ const Login = () => {
           onsubmit(e);
         }}
       >
-        
         <div className="form-group">
           <input
             type="email"
@@ -58,11 +65,11 @@ const Login = () => {
             minLength="6"
           />
         </div>
-        
+
         <input type="submit" className="btn btn-primary" value="Login" />
       </form>
       <p className="my-1">
-        Don't  have an account? <Link to="/register">Sign Up</Link>
+        Don't have an account? <Link to="/register">Sign Up</Link>
       </p>
     </Fragment>
   );
