@@ -10,10 +10,11 @@ const userToken = localStorage.getItem("userToken")
 
 const initialState = {
   loading: false,
-  userInfo: null,
+  isAuthenticated: null,
   userToken,
   error: null,
   success: false,
+  isAuthenticated: false,
   errorMsg: false,
 };
 
@@ -24,7 +25,7 @@ export const authSlice = createSlice({
     logout: (state) => {
       localStorage.removeItem("userToken"); // delete token from storage
       state.loading = false;
-      state.userInfo = null;
+      state.isAuthenticated = false;
       state.userToken = null;
       state.error = null;
     },
@@ -42,12 +43,15 @@ export const authSlice = createSlice({
       state.loading = false;
       state.userInfo = payload;
       state.userToken = payload.userToken;
+      state.isAuthenticated = true;
     },
     [userLogin.rejected]: (state, { payload }) => {
       state.loading = false;
       state.error = payload;
-      console.log(payload);
+      state.isAuthenticated = false;
     },
+
+    // registerUser
 
     [registerUser.pending]: (state) => {
       state.loading = true;
@@ -55,14 +59,14 @@ export const authSlice = createSlice({
     },
     [registerUser.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.success = true; // registration successful
-      // state.userToken = localStorage.setItem("userToken");
+      state.success = true;
     },
     [registerUser.rejected]: (state, { payload }) => {
       state.loading = false;
       state.error = payload;
-      // console.log(payload.response.data.errors);
       state.errorMsg = true;
+      state.isAuthenticated = false;
+      localStorage.removeItem("token");
     },
   },
 });

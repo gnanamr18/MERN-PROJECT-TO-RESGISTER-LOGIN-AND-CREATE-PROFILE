@@ -7,43 +7,38 @@ import Login from "./components/auth/Login";
 import "./App.css";
 import Alert from "./components/layout/Alert";
 import Dashboard from "./components/dashboard/Dashboard";
-
+import ProtectedRoute from "./components/protectedroutes/ProtectedRoute";
 const App = () => {
   return (
     <Router>
       <Fragment>
         <Navbar />
         <Alert />
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route
-            path="/register"
-            element={
-              <div className="container">
-                {" "}
-                <Register />{" "}
-              </div>
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <div className="container">
-                {" "}
-                <Login />{" "}
-              </div>
-            }
-          />
-          <Route
-            path="/dashboard"
-            element={
-              <div className="container">
-                {" "}
-                <Dashboard />
-              </div>
-            }
-          />
-        </Routes>
+        <switch>
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route
+              path="/register"
+              element={
+                <div className="container">
+                  {" "}
+                  <Register />
+                </div>
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <div className="container">
+                  <Login />
+                </div>
+              }
+            />
+            <Route element={<ProtectedRoute />}>
+              <Route element={<Dashboard />} path="/dashboard" exact />
+            </Route>
+          </Routes>
+        </switch>
       </Fragment>
     </Router>
   );

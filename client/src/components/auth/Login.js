@@ -9,15 +9,17 @@ const Login = () => {
     password: "",
   });
 
-  const { loading, userInfo, error } = useSelector((state) => state.auth);
+  const { loading, isAuthenticated, error } = useSelector(
+    (state) => state.auth
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (userInfo) {
+    if (isAuthenticated) {
       navigate("/dashboard");
     }
-  }, [userInfo]);
+  }, [isAuthenticated]);
 
   const { email, password } = formData;
   const onchange = (e) => {

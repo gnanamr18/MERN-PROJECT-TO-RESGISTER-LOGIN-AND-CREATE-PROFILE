@@ -47,11 +47,13 @@ export const registerUser = createAsyncThunk(
         },
       };
 
-      await axios.post(
+      const data = await axios.post(
         `${backendURL}/api/users`,
         { name, email, password },
         config
       );
+
+      localStorage.setItem("userToken", data.token);
     } catch (error) {
       console.log(error.response.data.errors);
       if (error.response && error.response.data.message) {
@@ -62,3 +64,16 @@ export const registerUser = createAsyncThunk(
     }
   }
 );
+
+// export const loadUser = () =>
+//   createAsyncThunk("user/auth", async () => {
+//     if (localStorage.token) {
+//       setAuthToken(localStorage);
+//     }
+//     try {
+//       const res = await axios.get('/api/auth');
+//       return res.data
+//     } catch (error) {
+
+//     }
+//   });
