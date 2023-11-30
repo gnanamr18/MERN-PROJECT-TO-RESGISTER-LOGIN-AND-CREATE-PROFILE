@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { registerUser, userLogin } from "../actions/authService";
 import { useSelector, useDispatch } from "react-redux";
 import { addAlert } from "./alertSlice";
+import { json } from "react-router-dom";
 
 // Get user from localStorage
 const userToken = localStorage.getItem("userToken")
@@ -16,6 +17,7 @@ const initialState = {
   success: false,
   isAuthenticated: false,
   errorMsg: false,
+  errorValue: "",
 };
 
 export const authSlice = createSlice({
@@ -49,6 +51,11 @@ export const authSlice = createSlice({
       state.loading = false;
       state.error = payload;
       state.isAuthenticated = false;
+
+      payload.response.data.errors.map((error) => {
+        console.log(error);
+      });
+      state.errorValue = payload.response.data.errors[0];
     },
 
     // registerUser

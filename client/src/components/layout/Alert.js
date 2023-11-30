@@ -5,6 +5,11 @@ const Alert = () => {
   const alerts = useSelector((state) => state.alerts);
   const state = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const errorValue = useSelector((state) => state.auth.errorValue.msg);
+
+  useEffect(() => {
+    console.log("123");
+  }, []);
 
   useEffect(() => {
     if (state.errorMsg === true) {
@@ -12,6 +17,12 @@ const Alert = () => {
       dispatch(addAlert("user already exist"));
     }
   }, [state.errorMsg]);
+
+  useEffect(() => {
+    if (errorValue) {
+      dispatch(addAlert(errorValue));
+    }
+  }, [errorValue]);
 
   useEffect(() => {
     if (alerts.length > 0) {

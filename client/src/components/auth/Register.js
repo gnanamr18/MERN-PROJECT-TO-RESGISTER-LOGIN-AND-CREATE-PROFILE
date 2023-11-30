@@ -20,7 +20,7 @@ const Register = (data) => {
   );
 
   if (success) {
-    navigate("/login");
+    navigate("/login", dispatch(addAlert("user registered kindly login")));
   }
 
   const { name, email, password, password2 } = formData;
