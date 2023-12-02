@@ -5,14 +5,14 @@ import { addAlert } from "./alertSlice";
 import { json } from "react-router-dom";
 
 // Get user from localStorage
-const userToken = localStorage.getItem("userToken")
-  ? localStorage.getItem("userToken")
-  : null;
+// const userToken = localStorage.getItem("userToken")
+//   ? localStorage.getItem("userToken")
+//   : null;
 
 const initialState = {
   loading: false,
   isAuthenticated: null,
-  userToken,
+  userToken: null,
   error: null,
   success: false,
   isAuthenticated: false,
@@ -44,7 +44,7 @@ export const authSlice = createSlice({
     [userLogin.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.userInfo = payload;
-      state.userToken = payload.userToken;
+      state.userToken = localStorage.getItem("userToken");
       state.isAuthenticated = true;
     },
     [userLogin.rejected]: (state, { payload }) => {

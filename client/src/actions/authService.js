@@ -22,7 +22,7 @@ export const userLogin = createAsyncThunk(
 
       // store user's token in local storage
       localStorage.setItem("userToken", data.token);
-      console.log(data);
+      console.log(data.token);
 
       return data;
     } catch (error) {
@@ -64,16 +64,3 @@ export const registerUser = createAsyncThunk(
     }
   }
 );
-
-// export const loadUser = () =>
-//   createAsyncThunk("user/auth", async () => {
-//     if (localStorage.token) {
-//       setAuthToken(localStorage);
-//     }
-//     try {
-//       const res = await axios.get('/api/auth');
-//       return res.data
-//     } catch (error) {
-
-//     }
-//   });

@@ -8,6 +8,7 @@ import "./App.css";
 import Alert from "./components/layout/Alert";
 import Dashboard from "./components/dashboard/Dashboard";
 import ProtectedRoute from "./components/protectedroutes/ProtectedRoute";
+import Profile from "./components/profiles/Profile";
 const App = () => {
   return (
     <Router>
@@ -36,6 +37,7 @@ const App = () => {
             />
             <Route element={<ProtectedRoute />}>
               <Route element={<Dashboard />} path="/dashboard" exact />
+              <Route element={<Profile />} path="/profile" exact />
             </Route>
           </Routes>
         </switch>
