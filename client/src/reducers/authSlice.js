@@ -2,12 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { registerUser, userLogin } from "../actions/authService";
 import { useSelector, useDispatch } from "react-redux";
 import { addAlert } from "./alertSlice";
-import { json } from "react-router-dom";
-
-// Get user from localStorage
-// const userToken = localStorage.getItem("userToken")
-//   ? localStorage.getItem("userToken")
-//   : null;
 
 const initialState = {
   loading: false,

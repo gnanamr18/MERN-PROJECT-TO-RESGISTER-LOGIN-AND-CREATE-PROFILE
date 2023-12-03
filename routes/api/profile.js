@@ -40,39 +40,20 @@ router.post(
     }
 
     // destructure the request
-    const {
-      company,
-      website,
-      location,
-      bio,
-      status,
-      githubusername,
-      skills,
-      youtube,
-      twitter,
-      instagram,
-      linkedin,
-      facebook,
-    } = req.body;
+    const { company, location, status, githubusername, skills } = req.body;
 
     // build a profile
     const profileFields = {};
     profileFields.user = req.user.id;
     if (company) profileFields.company = company;
-    if (website) profileFields.website = website;
+
     if (location) profileFields.location = location;
-    if (bio) profileFields.bio = bio;
+
     if (status) profileFields.status = status;
     if (githubusername) profileFields.githubusername = githubusername;
     if (skills) {
       profileFields.skills = skills.split(",").map((skill) => skill.trim());
     }
-
-    profileFields.social = {};
-    if (youtube) profileFields.social.youtube = youtube;
-    if (company) profileFields.social.twitter = twitter;
-    if (company) profileFields.social.facebook = facebook;
-    if (company) profileFields.social.instagram = instagram;
 
     try {
       let profile = await Profile.findOne({ user: req.user.id });
@@ -141,55 +122,52 @@ router.post(
     "/experience",
     [
       auth,
-        (check("title", "title is required").notEmpty(),
-        check("company", "Company is required").notEmpty(),
-        check(
-          "from",
-          "From date is required and needs to be from the past"
-        ).notEmpty())
-      
+      (check("title", "title is required").notEmpty(),
+      check("company", "Company is required").notEmpty(),
+      check(
+        "from",
+        "From date is required and needs to be from the past"
+      ).notEmpty()),
     ],
 
     async (req, res) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-          return res.status(400).json({ errors: errors.array() });
-        }
-        const { title, company, location, from, to, current, description } =
-          req.body;
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+      const { title, company, location, from, to, current, description } =
+        req.body;
 
-        const newExp = {
-          title,
-          company,
-          location,
-          from,
-          to,
-          current,
-          description,
-        };
-        try{
-          const profile = await Profile.findOne({ user: req.user.id });
-          profile.experience.unshift(newExp);
-          await profile.save()
-          res.json(profile);
-
-        }
-        catch (error) {
+      const newExp = {
+        title,
+        company,
+        location,
+        from,
+        to,
+        current,
+        description,
+      };
+      try {
+        const profile = await Profile.findOne({ user: req.user.id });
+        profile.experience.unshift(newExp);
+        await profile.save();
+        res.json(profile);
+      } catch (error) {
         console.error(error.message);
         res.status(500).send("server error");
       }
     }
   ),
-  router.delete('/experience/:exp_id',auth, async (req,res)=>{
+  router.delete("/experience/:exp_id", auth, async (req, res) => {
     try {
       const profile = await Profile.findOne({ user: req.user.id });
-      const removeIndex = profile.experience.map(item=> item.id).indexOf(req.params.exp_id);
-      profile.experience.splice(removeIndex,1);
-      await profile.save()
-      res.json(profile)
-    } catch (error) {
-      
-    }
+      const removeIndex = profile.experience
+        .map((item) => item.id)
+        .indexOf(req.params.exp_id);
+      profile.experience.splice(removeIndex, 1);
+      await profile.save();
+      res.json(profile);
+    } catch (error) {}
   })
 );
 

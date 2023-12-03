@@ -2,6 +2,7 @@ import { React, Fragment } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../reducers/authSlice";
+import Logout from "../../reducers/profileSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ const Navbar = () => {
           onClick={() => {
             dispatch(logout());
             navigate("/login");
-            console.log("hi");
+            // dispatch(Logout());
           }}
           href="#!"
         >

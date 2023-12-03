@@ -5,13 +5,18 @@ const initialState = {
   loading: true,
   profiles: [],
   error: {},
-  isProfile: false,
+  isProfile: undefined,
 };
 
 export const profileSlice = createSlice({
   name: "profile",
   initialState,
-  reducers: {},
+  reducers: {
+    Logout: (state) => {
+      state.profiles = [null];
+      console.log("hi");
+    },
+  },
   extraReducers: {
     [getProfile.fulfilled]: (state, { payload }) => {
       state.profiles = payload;
@@ -26,5 +31,5 @@ export const profileSlice = createSlice({
     },
   },
 });
-export const {} = profileSlice.actions;
+export const { Logout } = profileSlice.actions;
 export default profileSlice.reducer;

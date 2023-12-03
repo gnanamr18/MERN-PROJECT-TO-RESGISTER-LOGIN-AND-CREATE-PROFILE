@@ -59,6 +59,7 @@ export const registerUser = createAsyncThunk(
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message);
       } else {
+        console.log(error);
         return rejectWithValue(error);
       }
     }
