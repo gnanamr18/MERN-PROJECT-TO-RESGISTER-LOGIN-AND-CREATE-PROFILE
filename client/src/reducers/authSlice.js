@@ -46,9 +46,9 @@ export const authSlice = createSlice({
       state.error = payload;
       state.isAuthenticated = false;
 
-      payload.response.data.errors.map((error) => {
-        console.log(error);
-      });
+      // payload.response.data.errors.map((error) => {
+      //   console.log(error);
+      // });
       state.errorValue = payload.response.data.errors[0];
     },
 

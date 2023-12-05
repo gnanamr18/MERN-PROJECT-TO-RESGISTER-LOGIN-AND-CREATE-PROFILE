@@ -6,10 +6,13 @@ const Alert = () => {
   const state = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const errorValue = useSelector((state) => state.auth.errorValue.msg);
+  const regProfile = useSelector((state) => state.profile.regProfile);
 
   useEffect(() => {
-    console.log("123");
-  }, []);
+    if (regProfile) {
+      dispatch(addAlert("profile registered"));
+    }
+  }, [regProfile]);
 
   useEffect(() => {
     if (state.errorMsg === true) {
@@ -21,6 +24,7 @@ const Alert = () => {
   useEffect(() => {
     if (errorValue) {
       dispatch(addAlert(errorValue));
+      console.log(errorValue);
     }
   }, [errorValue]);
 

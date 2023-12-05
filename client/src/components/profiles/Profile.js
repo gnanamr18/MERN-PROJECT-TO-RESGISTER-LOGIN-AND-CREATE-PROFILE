@@ -6,7 +6,7 @@ const Profile = () => {
 
   const renderProfileDetails = () => {
     const { name } = profile.user;
-    const { company, location, status, skills, githubusername } = profile;
+    const { company, location, status, skills, github } = profile;
 
     return (
       <div className="profile-details">
@@ -14,19 +14,19 @@ const Profile = () => {
           <strong>Name:</strong> {name}
         </div>
         <div>
-          <strong>Company:</strong> {company}
+          <strong>company:</strong> {company}
         </div>
         <div>
-          <strong>Location:</strong> {location}
+          <strong>location:</strong> {location}
         </div>
         <div>
-          <strong>Status:</strong> {status}
+          <strong>status:</strong> {status}
         </div>
         <div>
-          <strong>Skills:</strong> {skills ? skills.join(", ") : "No skills"}
+          <strong>skills:</strong> {skills ? skills.join(", ") : "No skills"}
         </div>
         <div>
-          <strong>GitHub Username:</strong> {githubusername}
+          <strong>gitHub Username:</strong> {github}
         </div>
       </div>
     );

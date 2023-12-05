@@ -16,7 +16,7 @@ export const getProfile = createAsyncThunk(
       };
       console.log(jwtToken.jwtToken);
       const { data } = await axios.get(`${backendURL}/api/profile/me`, config);
-
+      console.log(data);
       return data;
     } catch (error) {
       // return custom error message from API if any
@@ -25,7 +25,40 @@ export const getProfile = createAsyncThunk(
         return rejectWithValue(error.response.data.error_message);
       } else {
         return rejectWithValue(error);
+      }
+    }
+  }
+);
+
+export const registerProfile = createAsyncThunk(
+  "api/profile",
+  async (
+    { jwtToken, company, location, status, skills, github },
+    rejectWithValue
+  ) => {
+    try {
+      // console.log(jwtToken);
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          "x-auth-token": jwtToken,
+        },
+      };
+
+      const data = await axios.post(
+        `${backendURL}/api/profile/`,
+        { company, location, status, skills, github },
+        config
+      );
+      console.log(data);
+      console.log(status, skills);
+      return data;
+    } catch (error) {
+      if (error) {
         console.log(error);
+      } else {
+        console.log(error);
+        return rejectWithValue(error);
       }
     }
   }

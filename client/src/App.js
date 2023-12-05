@@ -9,6 +9,7 @@ import Alert from "./components/layout/Alert";
 import Dashboard from "./components/dashboard/Dashboard";
 import ProtectedRoute from "./components/protectedroutes/ProtectedRoute";
 import Profile from "./components/profiles/Profile";
+import CreateProfile from "./components/profiles/CreateProfile";
 const App = () => {
   return (
     <Router>
@@ -38,6 +39,7 @@ const App = () => {
             <Route element={<ProtectedRoute />}>
               <Route element={<Dashboard />} path="/dashboard" exact />
               <Route element={<Profile />} path="/profile" exact />
+              <Route element={<CreateProfile />} path="/createprofile" exact />
             </Route>
           </Routes>
         </switch>

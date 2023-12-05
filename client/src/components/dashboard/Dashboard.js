@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Profile from "../profiles/Profile";
 import { addAlert } from "../../reducers/alertSlice";
 import { Logout } from "../../reducers/profileSlice";
+import CreateProfile from "../profiles/CreateProfile";
 const Dashboard = () => {
   // useEffect(() => {
   //   const jwtToken = useSelector(state.auth.userToken);
@@ -19,9 +20,13 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const handleGetProfile = async (e) => {
     e.preventDefault();
-    if (loading) {
-      dispatch(getProfile({ jwtToken }));
-    }
+    dispatch(getProfile({ jwtToken }));
+    console.log("hi");
+  };
+
+  const handleCreateProfile = async (e) => {
+    e.preventDefault();
+    navigate("/createprofile");
   };
 
   useEffect(() => {
@@ -37,12 +42,13 @@ const Dashboard = () => {
   const profileLink = (
     <div>
       <div>
-        <p className="container">click here to view your profile</p>
+        <p className="container">
+          <strong>click here to view your profile</strong>
+        </p>
         <button
-          className="container"
+          className="cbn"
           onClick={(e) => {
             handleGetProfile(e);
-            dispatch(Logout());
           }}
         >
           click here
@@ -54,11 +60,14 @@ const Dashboard = () => {
   const noProfileLink = (
     <div>
       <div>
-        <p className="container">click here to create your profile</p>
+        <p className="container">
+          {" "}
+          <strong>click here to create your profile</strong>
+        </p>
         <button
-          className="container"
+          className="cbn"
           onClick={(e) => {
-            // handleCreateProfile(e);
+            handleCreateProfile(e);
           }}
         >
           click here

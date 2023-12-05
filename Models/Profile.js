@@ -21,7 +21,7 @@ const ProfileSchema = new mongoose.Schema({
     required: true,
   },
 
-  githubusername: {
+  github: {
     type: String,
   },
 

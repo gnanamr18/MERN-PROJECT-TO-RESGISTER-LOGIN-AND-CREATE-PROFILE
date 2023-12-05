@@ -40,7 +40,7 @@ router.post(
     }
 
     // destructure the request
-    const { company, location, status, githubusername, skills } = req.body;
+    const { company, location, status, github, skills } = req.body;
 
     // build a profile
     const profileFields = {};
@@ -50,7 +50,7 @@ router.post(
     if (location) profileFields.location = location;
 
     if (status) profileFields.status = status;
-    if (githubusername) profileFields.githubusername = githubusername;
+    if (github) profileFields.github = github;
     if (skills) {
       profileFields.skills = skills.split(",").map((skill) => skill.trim());
     }
